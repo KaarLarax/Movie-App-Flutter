@@ -13,7 +13,7 @@ class MovieDetails extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            MovieCard(movie: movie),
+            MovieCard(movie: movie, isDetails: true),
             Text(
               'Movie Posters',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -31,7 +31,10 @@ class MovieDetails extends StatelessWidget {
                       movie.images[index],
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.broken_image);
+                        return const Image(
+                          image: AssetImage('assets/images/image-error.png'),
+                          fit: BoxFit.cover,
+                        );
                       },
                     ),
                   );

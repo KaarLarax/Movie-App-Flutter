@@ -3,9 +3,10 @@ import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/pages/movie_details.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({super.key, required this.movie, this.isDetails = false});
 
   final Movie movie;
+  final bool isDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +45,20 @@ class MovieCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    // Use Navigator to navigate to the MovieDetails page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MovieDetails(movie: movie),
+                isDetails
+                    ? Text('')
+                    : TextButton(
+                        onPressed: () {
+                          // Use Navigator to navigate to the MovieDetails page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetails(movie: movie),
+                            ),
+                          );
+                        },
+                        child: const Text('Read More'),
                       ),
-                    );
-                  },
-                  child: const Text('Read More'),
-                ),
               ],
             ),
           ),

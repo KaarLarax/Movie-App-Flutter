@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/pages/movie_details.dart';
 import 'package:movie_app/providers/movie_provider.dart';
+import 'package:movie_app/utils/movie_parser.dart';
+import 'package:movie_app/components/movie_card.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -34,21 +38,22 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    Provider.of<MovieProvider>(context, listen: false).loadMovies(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final movies = Provider.of<MovieProvider>(context).loadMovies();
+    final movieData = Provider.of<MovieProvider>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Movies')),
       body: Center(
         child: ListView.builder(
-          itemCount: movies.length,
+          itemCount: movieData.movieList.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(movies[index]),
-              subtitle: const Text("Subtitle"),
-              trailing: const Icon(Icons.arrow_forward),
-              leading: CircleAvatar(child: Text(movies[index][0])),
-            );
-            // return Card(child: Center(child: Text(movies[index])));
+            final movie = movieData.movieList[index];
+            return MovieCard(movie: movie);
           },
         ),
       ),

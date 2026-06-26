@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/components/movie_card.dart';
 import 'package:movie_app/models/movie.dart';
 
 class MovieDetails extends StatelessWidget {
@@ -7,6 +8,39 @@ class MovieDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('${movie.title}')));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Movie Details')),
+      body: Container(
+        child: Column(
+          children: [
+            MovieCard(movie: movie),
+            Text(
+              'Movie Posters',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: movie.images.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 4.0,
+                    child: Image.network(
+                      movie.images[index],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.broken_image);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
